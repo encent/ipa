@@ -221,10 +221,10 @@ See the `ipa.py` docstrings for more details.
 
 To reproduce the ***ipa*** plots from the paper, first install ***ipa*** ([System Requirements](#system-requirements) and [Getting Started](#getting-started)). After that, download the input data using [this link](https://ccnag-my.sharepoint.com/:f:/g/personal/nikolai_bykov_cnag_eu/ElwkqPgVuTdAoWlEUXUwICYBnYK74_WPbbipFTryXlJlQg?e=47sSwg). All datasets in this folder are ours except for those related to human (Krietenstein et al., 2020) and fruit fly (Batut et al., 2022). The full list of public datasets with accession numbers used in our study is provided in the Supplementary Table 2 in the *Kim et al.* paper.
 
-Go to the `ipa/script` folder:
+Go to the `ipa/scripts` folder:
 
 ```bash
-cd script
+cd scripts
 ```
 
 Run the `Kim_et_al_script.py` script:
