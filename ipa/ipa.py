@@ -80,7 +80,7 @@ def ipa_plot(bw_file, roi_file, output_dir, extra_bw_file=None, roi_start_name=N
 
     Args:
         bw_file: Path to the bigWig file. Keep in mind that chromosome names in the .bw file and in all the files that will be used in the ipa_plot() function (e.g. TSS-TES sites, ATAC-Seq signal .bw file) should match each other.
-        roi_file: Path to the annotation file with the regions of interest (e.g. TSS-TES sites). The file should contain at least three columns: 'chrom', 'start', 'end' without header.
+        roi_file: Path to the annotation file with the regions of interest (e.g. TSS-TES sites). The file should be in a BED format.
         output_dir: Path to the output directory which will store the output plot file.
         extra_bw_file: (optional) Path to the second bigWig file (default: None).
         roi_start_name: Alias for the start of the region of interest, e.g. TSS or loop start (default: None).
@@ -118,7 +118,7 @@ def ipa_plot(bw_file, roi_file, output_dir, extra_bw_file=None, roi_start_name=N
     line1, = ax1.plot(np.nanmean(stackup_concat, axis=0), label=os.path.basename(bw_file))
     ax1.set_xlabel(f'Distance from {roi_start_name}/{roi_end_name}, kbp')
     ax1.set_ylabel(os.path.basename(bw_file))
-    ax1.set_title(os.path.basename(output_dir))
+    ax1.set_title(os.path.basename(os.path.normpath(output_dir)))
 
     # Make x-axis ticks
     x_ticks = list(np.arange(0, nbins + 10, 10)) + list(np.arange(2 * nbins - 1, 3 * nbins, 10))
@@ -141,7 +141,7 @@ def ipa_plot(bw_file, roi_file, output_dir, extra_bw_file=None, roi_start_name=N
     
     # Combine legends
     labels = [line.get_label() for line in lines]
-    ax1.legend(lines, labels, loc='upper right')
+    ax1.legend(lines, labels, loc='best')
 
     # Save the plot
     f.savefig(output_plot_filename, dpi=300, bbox_inches='tight')
@@ -155,7 +155,7 @@ def ipa(clr_path, roi_file, output_dir, bw_dir=None, expected=False, clr_weight_
     2. Create a stackup plot based on the .bw files.
     Args:
         clr_path: Path to the .cool file. Keep in mind that chromosome names in the .cool file and in all the files that will be used in the ipa_plot() function (e.g. TSS-TES sites, ATAC-Seq signal .bw file) should match each other.
-        roi_file: Path to the annotation file with the regions of interest (e.g. TSS-TES sites). The file should contain at least three columns: 'chrom', 'start', 'end' without header.
+        roi_file: Path to the annotation file with the regions of interest (e.g. TSS-TES sites). The file should be in a BED format.
         output_dir: Path to the output directory which will store the output ipa track and plot files.
         bw_dir: Path to the directory with the .bw files (ATAC-Seq, ChIP-Seq etc.) that will be used in the ipa_plot() function (default: None).
         expected: If True, generates an IPA track based on the observed over expected matrix (default: False).
