@@ -2,16 +2,27 @@
 
 **Interaction Pattern Aggregation analysis**
 
-The goal of this analysis is to assess the average pattern shape (e.g. loops or micro-compartments) in the 3C data, and, if necessary, to compare it with the other signals: ATAC-Seq, histone modifications, etc. 
+The original goal of this analysis was to distinguish micro-compartmental interactions found in *C. owczarzaki* 
+from chromatin loops observed in other species (Kim et al., 2025). 
+Below, we provide detailed instructions to reproduce the analysis from our paper.
+You are welcome to apply this analysis to your own 3C data.
 
-***ipa* is useful when:**
-
-1. You want to assess the shape of a 3C pattern in addition to the classic pileup analysis (using ***cooltools*** or ***coolpup.py***). For example, to show the difference in the shape of loops and micro-compartments (Fig. B).
-2. You want to compare the shape of a 3C pattern (e.g. loops or micro-compartments) with some other signals, e.g. ATAC-Seq, histone modifications (Fig. C). 
+In our study, we define compartmentalisation using its classical definition, 
+as nested interactions with a checkerboard pattern, where contacts are enriched within certain set of loci, 
+while contacts between them are depleted (Lieberman-Aiden et al., 2009, Science 326, 289-293). 
+In *C. owczarzaki*, the intensity of such preferential interactions is often comparable to the general 
+background signal. Furthermore, compartmental interactions do not appear to be driven by specific sequence 
+regulatory elements but are likely due to the intrinsic properties of chromatin, such as its polymer nature 
+and the segregation of active and inactive chromatin. 
+In contrast, we define chromatin loops as local peaks in interaction frequencies, 
+where two points interact significantly more with each other than with other points in their neighborhood 
+(Rao et al 2014, Cell 159, 1665-1680).
 
 **The analysis is done in two steps:**
 
-1. The sum of contacts is calculated for every bin in the ICE-normalized or in the observed-over-expected 3C matrix. Calculation of the sum of contacts is restricted to the minimum and maximum size of a pattern which shape should be assessed, e.g. minimum/maximum loop size (Fig. A). The output of this step is a bigWig track for the calculated restricted sum of contacts.
+1. The sum of contacts is calculated for every bin in the ICE-normalized or in the observed-over-expected 3C matrix. 
+Calculation of the sum of contacts is restricted to the minimum and maximum size of an interaction pattern, 
+e.g. minimum/maximum loop size (Fig. A). The output of this step is a bigWig track for the calculated restricted sum of contacts.
 2. Using [***pybbi***](https://github.com/nvictus/pybbi), the stackup plots (Fig. B—C) are created based on the input bigWig files and the annotation file with the genomic coordinates of the loci that are located in a close proximity to the examined pattern: loop anchors, domain borders, TSS/TES, etc. If the annotation file has the strand column, the corresponding intervals from the bigWig file will be properly flipped.
 
 **Installation and usage**
@@ -157,7 +168,11 @@ ipa plot \
 
 #### `ipa`
 
-This is the main command that runs the entire analysis. It first runs the `ipa track` command and then `ipa plot` command. The main advantage of running this command, compared to running two other commands consequtively, is that it can plot as many stackups as there are additional bigWig files in the corresponding folder. This is useful when you either have many species/experiments to run in a row for different sets of parameters, or when you many bigWig files which you want to plot in addition to the 3C-based stackup. 
+This is the main command that runs the entire analysis. It first runs the `ipa track` command and then 
+`ipa plot` command. The main advantage of running this command, compared to running two other commands 
+consequtively, is that it can plot as many stackups as there are additional bigWig files in the 
+corresponding folder. This is useful when you either have many species/experiments to run in a row for 
+different sets of parameters, or when you have many bigWig files which you want to plot in addition to the 3C-based stackup. 
 
 **Usage:**
 
@@ -256,7 +271,7 @@ For TSS-TES comparative plots (Fig. C) we used these species-specific ***ipa*** 
 Size range of contacts (Kb) corresponds to the ***ipa*** parameters `--min-dist` and `--max-dist`. 
 
 
-To obtain the domain pattern shape plot for *Sphaeroforma arctica* (Fig. B) we used these species-specific ***ipa*** parameters:
+To obtain the ***ipa*** plot for *Sphaeroforma arctica* (Fig. B) we used these species-specific parameters:
 | Species | Micro-C resolution (bp) | Size range of contacts (Kb) | Flank (Kb) |
 |---------|-------------------------|-----------------------------|------------|
 | Sarc    | 2800                    | 50 — 4000                   | 30         |
