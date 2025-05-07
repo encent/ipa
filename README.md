@@ -286,4 +286,4 @@ Contributions are welcome! Please feel free to submit a pull request or open an 
 
 ## Citing `ipa`
 
-[TBD] Kim et al., 2025
+Kim, I.V., Navarrete, C., Grau-Bové, X. et al. Chromatin loops are an ancestral hallmark of the animal regulatory genome. Nature (2025). https://doi.org/10.1038/s41586-025-08960-w
